@@ -1,20 +1,19 @@
 .list {
+  padding: 15px;
   list-style: none;
-  padding-left: 20px;
 }
 .item {
-  border-bottom: 3px solid #ffffff;
-  margin-bottom: 30px;
-  padding-bottom: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 20px;
 }
 .wrap {
   display: flex;
-  gap: 20px;
-  margin-bottom: 10px;
+  gap: 15px;
+  margin-bottom: 15px;
 }
 .img {
-  border-radius: 5px;
-  object-fit: cover;
   width: 200px;
   height: 230px;
 }

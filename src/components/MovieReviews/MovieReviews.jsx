@@ -14,15 +14,13 @@ const MovieReviews = () => {
   useEffect(() => {
     const fetchReviewsMoviesHandler = async () => {
       try {
-        // Показуємо лоадер
         setLoading(true);
         const data = await fetchReviewsMovie(movieId);
-        // console.log(data.results);
+
         setReviews(data.results);
       } catch (error) {
         console.log(error.message);
       } finally {
-        // Приховуємо лоадер
         setLoading(false);
       }
     };

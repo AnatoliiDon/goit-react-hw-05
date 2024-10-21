@@ -12,16 +12,14 @@ const HomePage = () => {
   useEffect(() => {
     const fetchTrendingMoviesHandler = async () => {
       try {
-        // Показуємо лоадер
         setLoading(true);
         const data = await fetchTrendingMovies();
-        // console.log(data.results);
+
         setMovies(data.results);
       } catch (error) {
         setError(true);
         console.log(error.message);
       } finally {
-        // Приховуємо лоадер
         setLoading(false);
       }
     };
@@ -30,7 +28,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <h2 style={{ textAlign: 'center' }}>Trending today</h2>
+      <h2 style={{ textAlign: 'center' }}>Trending</h2>
       {loading && <Loader />}
       {error ? <ErrorMessage /> : <MovieList movies={movies} />}
     </div>

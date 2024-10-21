@@ -3,15 +3,15 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  gap: 30px;
-  height: 80px;
-  padding-left: 20px;
+  gap: 15px;
+  height: 100px;
+  padding: 20px;
 }
 .input {
-  width: 400px;
-  height: 40px;
-  border: 1px solid #ffffff;
-  border-radius: 8px;
+  width: 250px;
+  height: 30px;
+  border: 1px solid #535252;
+  border-radius: 20px;
   background-color: #ffffff;
   padding-left: 10px;
   outline: none;
@@ -19,23 +19,17 @@
   font-size: 18px;
   color: black;
 }
-.input:hover {
-  border: 1px solid #080808;
-}
+
 .btn {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 150px;
-  background-color: #a8aaaab0;
-  height: 44px;
+  background-color: #0e0f0fb0;
+  height: 30px;
   border-color: #a8aaaab0;
   border-radius: 8px;
   font-weight: 500;
   font-size: 18px;
   outline: none;
-}
-.btn:hover {
-  color: #ffffff;
-  border: 1px solid #ffffff;
 }

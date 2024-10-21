@@ -1,7 +1,7 @@
 import styles from './ErrorMessage.module.css';
 
 const ErrorMessage = () => {
-  return <p className={styles.message}>❌ Oh no, something went wrong</p>;
+  return <p className={styles.message}>🤷‍♂️ something went wrong</p>;
 };
 
 export default ErrorMessage;

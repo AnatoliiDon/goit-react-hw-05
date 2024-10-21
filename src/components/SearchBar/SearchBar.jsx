@@ -1,17 +1,11 @@
 import styles from './SearchBar.module.css';
-import { CiSearch } from 'react-icons/ci';
 import toast, { Toaster } from 'react-hot-toast';
 
 const SearchBar = ({ onSearch }) => {
   const handleSubmit = event => {
-    //Скидання дефолтного перезаваннтаження форми прр сабміті
     event.preventDefault();
-    //Знаходимо форму
     const form = event.target;
-    //знаходимо значення елемента фомми(input)
     const query = form.elements.search.value.trim();
-    // console.log(query);
-    //Якщо відпривлено пучти запрос, зявиться повідомлення
     if (!query) {
       toast.error('Enter the query text', {
         position: 'top-right',
@@ -25,8 +19,6 @@ const SearchBar = ({ onSearch }) => {
         },
       });
     } else {
-      //   reset();
-
       onSearch(query);
 
       event.target.reset();
@@ -46,7 +38,7 @@ const SearchBar = ({ onSearch }) => {
           placeholder="Search movies"
         />
         <button className={styles.btn} type="submit">
-          Search &nbsp; <CiSearch />
+          Search
         </button>
       </form>
     </>

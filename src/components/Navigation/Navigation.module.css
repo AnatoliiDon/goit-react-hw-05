@@ -13,13 +13,13 @@
   border-radius: 5px;
   font-size: 22px;
   transition: all 0.5s;
-  color: #868585;
+  color: #493939;
   text-decoration: none;
 }
 .link:hover {
-  color: #8685859d;
+  color: #7c6e6e9d;
 }
 .active {
-  color: white;
-  border-color: white;
+  color: #ffffff;
+  border: 1px solid #fafafa;
 }

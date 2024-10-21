@@ -12,34 +12,28 @@ const MoviesPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  //Зчитуємо значення пошуку з адреси і додаємо в query
   const query = searchParams.get('q');
-  // console.log(query);
 
   const onSearch = searchTerm => {
-    //Записуємо в обєкт searchParams значенни поля пошуку
-    //при відправці форми змінюється одреса сторнки з урахуванням пошукового запиту
     setSearchParams({ q: searchTerm });
   };
 
   useEffect(() => {
     const fetchSearchMoviesHandler = async () => {
       try {
-        // показуємо лоадер
         setLoading(true);
         const data = await fetchSearchMovies(query);
         const results = data.results;
-        //якщо від сервера отримано порожні обєкт показємо повідомлення
         if (results.length === 0) {
-          toast.error('Sorry there is no results with this query', {
-            position: 'top-right',
+          toast.error('We can`t find any film on your request', {
+            position: 'top-left',
             style: {
               border: '1px solid #f52121',
               padding: '16px',
-              color: '#f52121',
+              color: '#fafafa',
               height: '20px',
               fontWeight: '500',
-              backgroundColor: '#fc9c9c',
+              backgroundColor: 'red',
             },
           });
           return;
@@ -49,7 +43,6 @@ const MoviesPage = () => {
         setError(true);
         console.log(error.message);
       } finally {
-        // //Приховуємо лоадер
         setLoading(false);
       }
     };

@@ -13,15 +13,12 @@ const MovieCast = () => {
   useEffect(() => {
     const fetchCastMoviesHandler = async () => {
       try {
-        // Показуємо лоадер
         setLoading(true);
         const data = await fetchCastMovie(movieId);
-        // console.log(data.cast);
         setCast(data.cast);
       } catch (error) {
         console.log(error.message);
       } finally {
-        // Приховуємо лоадер
         setLoading(false);
       }
     };

@@ -35,10 +35,8 @@ const MovieDetails = ({ id }) => {
     fetchDetailsMoviesHandler();
   }, [id]);
 
-  //якщо перешли за скопійованим посиланням і немає данних про
-  //попередню сторінку, то перейди на сторінку movies
   const backUrl = location.state?.from || '/movies';
-  //location.state інформація про сторінку з якої перейшли
+
   const goBack = () => navigate(backUrl);
 
   return (

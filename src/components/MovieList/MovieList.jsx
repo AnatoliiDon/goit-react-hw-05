@@ -8,7 +8,6 @@ const MovieList = ({ movies }) => {
   return (
     <ul className={styles.list}>
       {movies !== null &&
-        //знак ? після movies означає: якщо є такий об'кт то виконуємо дію
         movies?.map(movie => {
           return (
             <li className={styles.listItem} key={movie.id}>
@@ -27,11 +26,9 @@ const MovieList = ({ movies }) => {
                   alt={movie.title}
                 />
                 <p className={styles.rating}>
-                  {/* повертає число округлене до десятих */}
                   {movie.vote_average.toFixed(1)}/10
                 </p>
                 <p className={styles.rating}>
-                  {/* повертає данні з рядка тільки з 1 по 4 символ */}
                   {movie.release_date.substring(0, 4)}
                 </p>
                 <p className={styles.title}>{movie.title}</p>
