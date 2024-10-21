@@ -1,0 +1,41 @@
+.list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  color: #ffffff;
+  list-style: none;
+}
+.listItem {
+  width: calc((100% - 4 * 20px) / 5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  padding: 8px;
+}
+.link {
+  color: #ffffff;
+  text-decoration: none;
+}
+.link:hover {
+  color: #ffffff;
+  transform: scale(1.03);
+}
+.img {
+  display: block;
+  object-fit: cover;
+  height: 300px;
+  width: 200px;
+  margin: auto;
+  border-radius: 5px;
+}
+.rating {
+  text-align: center;
+}
+
+.title {
+  text-align: center;
+}

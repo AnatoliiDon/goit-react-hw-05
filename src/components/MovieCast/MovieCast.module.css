@@ -1,0 +1,27 @@
+.list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+
+  color: #ffffff;
+  list-style: none;
+}
+.listItem {
+  width: calc((100% - 3 * 20px) / 4);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  padding: 8px;
+}
+.img {
+  display: block;
+  object-fit: cover;
+  height: 200px;
+  width: 150px;
+
+  border-radius: 5px;
+}
