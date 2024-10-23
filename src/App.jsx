@@ -1,22 +1,21 @@
-import { Routes, Route } from 'react-router-dom';
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import Navigation from './components/Navigation/Navigation';
 import { lazy, Suspense } from 'react';
 
-import Navigation from '../Navigation/Navigation';
-
-const HomePage = lazy(() => import('../../pages/HomePage'));
-const MoviesPage = lazy(() => import('../../pages/MoviesPage'));
-const MovieDetailsPage = lazy(() => import('../../pages/MovieDetailsPage'));
-const MovieCast = lazy(() => import('../MovieCast/MovieCast'));
-const MovieReviews = lazy(() => import('../MovieReviews/MovieReviews'));
-const NotFoundPage = lazy(() => import('../../pages/NotFoundPage'));
+const HomePage = lazy(() => import('./pages/HomePage'));
+const MoviesPage = lazy(() => import('./pages/MoviesPage'));
+const MovieDetailsPage = lazy(() => import('./pages/MovieDetailsPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
+const MovieCast = lazy(() => import('./components/MovieCast/MovieCast'));
+const MovieReviews = lazy(() =>
+  import('./components/MovieReviews/MovieReviews')
+);
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading page...</div>}>
+    <Suspense fallback={<div>Loading... Please wait</div>}>
       <div>
         <Navigation />
-
         <main>
           <Routes>
             <Route path="/" element={<HomePage />} />

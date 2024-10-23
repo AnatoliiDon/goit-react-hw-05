@@ -1,47 +1,54 @@
-import styles from './SearchBar.module.css';
 import toast, { Toaster } from 'react-hot-toast';
+import { useState } from 'react';
+import css from './searchBar.module.css';
+const SearchBar = ({ onSubmit }) => {
+  const [enteredValue, setEnteredValue] = useState('');
 
-const SearchBar = ({ onSearch }) => {
-  const handleSubmit = event => {
-    event.preventDefault();
-    const form = event.target;
-    const query = form.elements.search.value.trim();
-    if (!query) {
-      toast.error('Enter the query text', {
-        position: 'top-right',
-        style: {
-          border: '1px solid #f52121',
-          padding: '16px',
-          color: '#f52121',
-          height: '20px',
-          fontWeight: '500',
-          backgroundColor: '#fc9c9c',
-        },
-      });
-    } else {
-      onSearch(query);
+  const notify = ({ currentTarget: { value } }) => {
+    setEnteredValue(value);
+  };
 
-      event.target.reset();
+  const handleSubmit = e => {
+    e.preventDefault();
+    const trimSearchQuery = enteredValue.trim();
+
+    if (trimSearchQuery === '') {
+      toast('Please, enter search word!');
+      return;
     }
+
+    onSubmit(enteredValue);
+    setEnteredValue('');
   };
 
   return (
-    <>
-      <Toaster />
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <input
-          className={styles.input}
-          name="search"
-          type="text"
-          autoComplete="off"
-          autoFocus
-          placeholder="Search movies"
-        />
-        <button className={styles.btn} type="submit">
-          Search
-        </button>
-      </form>
-    </>
+    <form className={css.form} onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="query"
+        autoComplete="off"
+        autoFocus
+        placeholder="Enter film name"
+        value={enteredValue}
+        onChange={notify}
+        className={css.input}
+      />
+      <button className={css.searchBtn} type="submit">
+        Search
+      </button>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            border: '1px solid #713200',
+            padding: '16px',
+            color: '#fafafa',
+            background: 'red',
+          },
+        }}
+      />
+    </form>
   );
 };
 

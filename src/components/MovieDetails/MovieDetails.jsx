@@ -1,102 +1,67 @@
-import { useState, useEffect } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { defImg } from '../../api/defImg';
+import css from './MovieDetails.module.css';
 import clsx from 'clsx';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 
-import { fetchDetailsMovie } from '../../api/api.jsx';
-import Loader from '../Loader/Loader';
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import styles from './MovieDetails.module.css';
-import { defImg } from '../../api/defImg.jsx';
+const MovieDetails = ({ movieDetail }) => {
+  const imgPath = 'https://image.tmdb.org/t/p/w500/';
+  const genres = movieDetail.genres
+    ? movieDetail.genres.map(genre => genre.name).join(', ')
+    : 'No genres available';
 
-const buildStylesClasses = ({ isActive }) =>
-  clsx(styles.link, isActive && styles.active);
-
-const MovieDetails = ({ id }) => {
-  const [detailsMovie, setDetailsMovie] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const navigate = useNavigate();
+  const activeStyle = ({ isActive }) =>
+    clsx(css.link, isActive && css.activeLink);
 
   const location = useLocation();
+  const navigate = useNavigate();
+  const prevPageUrl = location.state?.from || '/movies';
 
-  useEffect(() => {
-    const fetchDetailsMoviesHandler = async () => {
-      try {
-        setLoading(true);
-        const data = await fetchDetailsMovie(id);
-        setDetailsMovie(data);
-      } catch (error) {
-        setError(true);
-        console.log(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDetailsMoviesHandler();
-  }, [id]);
-
-  const backUrl = location.state?.from || '/movies';
-
-  const goBack = () => navigate(backUrl);
+  const goBack = () => navigate(prevPageUrl);
 
   return (
     <>
-      <button className={styles.btn} onClick={goBack}>
-        ⇐ Go back
+      <button className={css.backBtn} onClick={goBack}>
+        Go back
       </button>
-      {loading && <Loader />}
-      {error ? (
-        <ErrorMessage />
-      ) : (
-        <>
-          <div className={styles.wrapImg}>
-            <img
-              className={styles.img}
-              src={
-                detailsMovie?.poster_path
-                  ? `https://image.tmdb.org/t/p/w200${detailsMovie?.poster_path}`
-                  : defImg
-              }
-              alt={id.title}
-            />
-            <div className={styles.wrapInfo}>
-              <h2 className={styles.title}>{detailsMovie?.title}</h2>
-              <p className={styles.release}>
-                Release:&nbsp;{detailsMovie?.release_date}
-              </p>
-              <p className={styles.rate}>
-                User Score:&nbsp;
-                {Math.round(detailsMovie?.vote_average * 10)}%
-              </p>
-              <h3 className={styles.overviewTitle}>Overview</h3>
-              <p className={styles.overview}>{detailsMovie?.overview}</p>
-              <h3 className={styles.genresTitle}>Genres</h3>
-              <p className={styles.genres}>
-                {detailsMovie?.genres.map(genre => genre.name).join(' ')}
-              </p>
-            </div>
-          </div>
-          <div className={styles.moreInfo}>
-            <h3 className={styles.moreInfoTitle}>Additional information</h3>
-            <div className={styles.linksInfo}>
-              <NavLink
-                state={{ from: backUrl }}
-                className={buildStylesClasses}
-                to={`/movies/${id}/cast`}
-              >
-                Cast
-              </NavLink>
-              <NavLink
-                state={{ from: backUrl }}
-                className={buildStylesClasses}
-                to={`/movies/${id}/reviews`}
-              >
-                Reviews
-              </NavLink>
-            </div>
-          </div>
-        </>
-      )}
+      <div className={css.contentWrapper}>
+        <img
+          className={css.posterImg}
+          src={
+            movieDetail.poster_path
+              ? `${imgPath}/${movieDetail.poster_path}`
+              : defImg
+          }
+          alt={movieDetail.title}
+        />
+        <div className={css.textContainer}>
+          <h3>{movieDetail.title}</h3>
+          <span>User Score: {movieDetail.vote_average}</span>
+          <br />
+          <span>Overview</span>
+          <p>{movieDetail.overview}</p>
+          <span>Genres:</span>
+          <p>{genres}</p>
+        </div>
+      </div>
+      <div>
+        <h3 className={css.detailsTitle}>More Info</h3>
+        <div className={css.detailsLink}>
+          <NavLink
+            className={activeStyle}
+            state={{ from: prevPageUrl }}
+            to={`/movies/${movieDetail.id}/cast`}
+          >
+            Cast
+          </NavLink>
+          <NavLink
+            className={activeStyle}
+            state={{ from: prevPageUrl }}
+            to={`/movies/${movieDetail.id}/reviews`}
+          >
+            Reviews
+          </NavLink>
+        </div>
+      </div>
     </>
   );
 };

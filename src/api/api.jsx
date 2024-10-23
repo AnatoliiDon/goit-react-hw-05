@@ -1,50 +1,39 @@
 import axios from 'axios';
 
-const KEY =
+const MY_KEY =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDhiYTYyZjFmMGM3MmVlMzc0MGMyZGVlNGVjNzAxNiIsIm5iZiI6MTcyOTUzMDY3NS4xMjM5OTksInN1YiI6IjY3MTY3ODMyZTZlZGMzYmFkNjEwNjRmYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.zmJREcb_seq4m4W1R58mziR_fpzRHYecEV5BdejoaD4';
 
-const moviesInstance = axios.create({
-  baseURL: 'https://api.themoviedb.org/3/',
-});
-
-const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: `Bearer ${KEY}`,
-  },
-  params: {
-    include_adult: 'false',
-  },
+axios.defaults.baseURL = 'https://api.themoviedb.org/3';
+axios.defaults.headers = {
+  Authorization: `Bearer ${MY_KEY}`,
+  accept: 'application/json',
 };
 
-export const fetchTrendingMovies = async () => {
-  const responseT = await moviesInstance.get('trending/movie/day', options);
-
-  return responseT.data;
-};
-
-export const fetchSearchMovies = async query => {
-  options.params.query = query;
-  const response = await moviesInstance.get('search/movie', options);
-
+export const fetchTrendMovies = async () => {
+  const response = await axios.get('/trending/movie/day?');
   return response.data;
 };
 
-export const fetchDetailsMovie = async id => {
-  const response = await moviesInstance.get(`movie/${id}`, options);
-
+export const fetchTrendMoviesByQuery = async query => {
+  const response = await axios.get(
+    `search/movie?query=${query}&include_adult=false&language=en-US&page=1`
+  );
   return response.data;
 };
 
-export const fetchCastMovie = async id => {
-  const response = await moviesInstance.get(`movie/${id}/credits`, options);
-
+export const fetchMoviesById = async movieId => {
+  const response = await axios.get(`/movie/${movieId}?language=en-US`);
   return response.data;
 };
 
-export const fetchReviewsMovie = async id => {
-  const response = await moviesInstance.get(`movie/${id}/reviews`, options);
+export const fetchMoviesCast = async movieId => {
+  const response = await axios.get(`/movie/${movieId}/credits?language=en-US`);
+  return response.data;
+};
 
+export const fetchMoviesReviews = async movieId => {
+  const response = await axios.get(
+    `/movie/${movieId}/reviews?language=en-US&page=1`
+  );
   return response.data;
 };

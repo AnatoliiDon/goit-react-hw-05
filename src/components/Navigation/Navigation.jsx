@@ -1,20 +1,19 @@
 import { NavLink } from 'react-router-dom';
+import css from './Navigation.module.css';
 import clsx from 'clsx';
-import styles from './Navigation.module.css';
-
-const buildStylesClasses = ({ isActive }) =>
-  clsx(styles.link, isActive && styles.active);
 
 const Navigation = () => {
+  const activeStyle = ({ isActive }) =>
+    clsx(css.link, isActive && css.activeLink);
   return (
-    <div className={styles.nav}>
-      <NavLink className={buildStylesClasses} to="/">
+    <header className={css.header}>
+      <NavLink className={activeStyle} to="/">
         Home
       </NavLink>
-      <NavLink className={buildStylesClasses} to="/movies" end>
-        Movies
+      <NavLink className={activeStyle} to="/movies">
+        Search
       </NavLink>
-    </div>
+    </header>
   );
 };
 

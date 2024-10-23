@@ -1,63 +1,70 @@
-import { fetchCastMovie } from '../../api/api.jsx';
-import { useState, useEffect } from 'react';
+import css from './MovieCast.module.css';
+import { defImg } from '../../api/defImg';
+import { useEffect, useState } from 'react';
+import { fetchMoviesCast } from '../../api/api';
 import { useParams } from 'react-router-dom';
-import styles from './MovieCast.module.css';
 import Loader from '../Loader/Loader';
-import { defImg } from '../../api/defImg.jsx';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const MovieCast = () => {
-  const [cast, setCast] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [movieCast, setMovieCast] = useState([]);
+  const imgPath = 'https://image.tmdb.org/t/p/w500/';
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const { movieId } = useParams();
 
   useEffect(() => {
-    const fetchCastMoviesHandler = async () => {
+    const fetchDetailsCastInfo = async () => {
       try {
-        setLoading(true);
-        const data = await fetchCastMovie(movieId);
-        setCast(data.cast);
+        setIsLoading(true);
+        if (!movieId) {
+          return;
+        }
+        const movieObj = await fetchMoviesCast(movieId);
+        setMovieCast(movieObj);
       } catch (error) {
-        console.log(error.message);
+        setError(error.message);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
-    fetchCastMoviesHandler();
+    fetchDetailsCastInfo();
   }, [movieId]);
+
+  let cast = movieCast?.cast || [];
 
   return (
     <div>
-      {loading && <Loader />}
-
-      {cast == 0 ? (
-        <p style={{ textAlign: 'center' }}>
-          We don&apos;t have any cast for this movie.
-        </p>
+      {isLoading && <Loader />}
+      {error && <ErrorMessage />}
+      {cast.length === 0 ? (
+        <p>No cast information available</p>
       ) : (
-        <ul className={styles.list}>
-          {cast?.length > 0 &&
-            cast.map(actor => (
-              <li className={styles.listItem} key={actor.cast_id}>
-                <img
-                  className={styles.img}
-                  src={
-                    actor?.profile_path
-                      ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                      : defImg
-                  }
-                  alt={actor.name}
-                />
-                <div className={styles.wrapInfo}>
-                  <h2>{actor.name}</h2>
-                  <h3>Character:</h3>
-                  <p>{actor.character}</p>
-                </div>
-              </li>
-            ))}
-        </ul>
+        <>
+          <ul className={css.castList}>
+            {cast.map(filmCast => {
+              return (
+                <li key={filmCast.id} className={css.castListItem}>
+                  <img
+                    className={css.castListItemImg}
+                    src={
+                      filmCast.profile_path
+                        ? `${imgPath}/${filmCast.profile_path}`
+                        : defImg
+                    }
+                    alt="actor photo"
+                  />
+                  <div className={css.castListItemContainer}>
+                    <p>Name: {filmCast.name}</p>
+                    <p>Role: {filmCast.character}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </>
       )}
     </div>
   );
 };
-
 export default MovieCast;

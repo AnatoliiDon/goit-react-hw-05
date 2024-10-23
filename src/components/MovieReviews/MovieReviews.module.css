@@ -1,26 +1,18 @@
-.list {
-  padding: 15px;
-  list-style: none;
-}
-.item {
-  border: 1px solid #ffffff;
+.reviewsListItem {
+  border: 1px, solid, #fafafa;
+  padding: 10px;
+  max-width: 1000px;
   border-radius: 15px;
-  padding: 15px;
-  margin-bottom: 20px;
 }
-.wrap {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-.img {
-  width: 200px;
-  height: 230px;
-}
-.textInfo {
+
+.reviewsList {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  list-style: none;
 }
-.content {
-  margin-bottom: 0;
+
+.reviewsListImg {
+  width: 300px;
+  height: auto;
 }

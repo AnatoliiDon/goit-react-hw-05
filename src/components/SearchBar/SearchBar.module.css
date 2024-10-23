@@ -1,35 +1,11 @@
-.form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  gap: 15px;
-  height: 100px;
-  padding: 20px;
-}
 .input {
-  width: 250px;
-  height: 30px;
-  border: 1px solid #535252;
-  border-radius: 20px;
-  background-color: #ffffff;
-  padding-left: 10px;
-  outline: none;
-  font-weight: 300;
-  font-size: 18px;
-  color: black;
+  padding: 8px;
 }
 
-.btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 150px;
-  background-color: #0e0f0fb0;
-  height: 30px;
-  border-color: #a8aaaab0;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 18px;
-  outline: none;
+.searchBtn {
+  margin-left: 20px;
+}
+
+.toast {
+  color: red;
 }

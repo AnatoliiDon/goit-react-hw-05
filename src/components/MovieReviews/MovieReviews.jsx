@@ -1,63 +1,66 @@
-import { useState, useEffect } from 'react';
+import css from './MovieReviews.module.css';
+import { defImg } from '../../api/defImg';
+import { useEffect, useState } from 'react';
+import { fetchMoviesReviews } from '../../api/api';
 import { useParams } from 'react-router-dom';
-
-import { fetchReviewsMovie } from '../../api/api.jsx';
-import styles from './MovieReviews.module.css';
 import Loader from '../Loader/Loader';
-import { defImg } from '../../api/defImg.jsx';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const MovieReviews = () => {
-  const [reviews, setReviews] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [movieReviews, setmovieReviews] = useState([]);
+  const imgPath = 'https://image.tmdb.org/t/p/w500/';
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const { movieId } = useParams();
 
   useEffect(() => {
-    const fetchReviewsMoviesHandler = async () => {
+    const fetchDetailsCastInfo = async () => {
       try {
-        setLoading(true);
-        const data = await fetchReviewsMovie(movieId);
-
-        setReviews(data.results);
+        setIsLoading(true);
+        if (!movieId) {
+          return;
+        }
+        const movieObj = await fetchMoviesReviews(movieId);
+        setmovieReviews(movieObj);
       } catch (error) {
-        console.log(error.message);
+        setError(error.message);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
-    fetchReviewsMoviesHandler();
+    fetchDetailsCastInfo();
   }, [movieId]);
+  let reviews = movieReviews?.results || [];
 
   return (
     <div>
-      {loading && <Loader />}
-      {reviews == 0 ? (
-        <p style={{ textAlign: 'center' }}>
-          We don&apos;t have any reviews for this movie.
-        </p>
+      {isLoading && <Loader />}
+      {error && <ErrorMessage />}
+      {reviews.length === 0 ? (
+        <p>No reviews information available</p>
       ) : (
-        <ul className={styles.list}>
-          {reviews?.length > 0 &&
-            reviews.map(review => (
-              <li className={styles.item} key={review.id}>
-                <div className={styles.wrap}>
+        <>
+          <ul className={css.reviewsList}>
+            {reviews.map(review => {
+              return (
+                <li key={review.id} className={css.reviewsListItem}>
+                  <h3>{review.author}</h3>
                   <img
-                    className={styles.img}
+                    className={css.reviewsListImg}
                     src={
-                      review?.author_details.avatar_path
-                        ? `https://image.tmdb.org/t/p/w200${review.author_details.avatar_path}`
+                      review.author_details.avatar_path
+                        ? `${imgPath}/${review.author_details.avatar_path}`
                         : defImg
                     }
-                    alt={review.author}
+                    alt="avatar"
                   />
-                  <div className={styles.textInfo}>
-                    <p>Author:&nbsp;{review.author}</p>
-                    <p>Updated:&nbsp;{review.updated_at}</p>
-                  </div>
-                </div>
-                <p className={styles.content}>{review.content}</p>
-              </li>
-            ))}
-        </ul>
+                  <p>Added date: {review.created_at}</p>
+                  <p>{review.content}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </>
       )}
     </div>
   );

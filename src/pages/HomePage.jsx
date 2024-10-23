@@ -1,38 +1,41 @@
-import { useState, useEffect } from 'react';
-import { fetchTrendingMovies } from '../api/api';
-import MovieList from '../components/MovieList/MovieList';
+import { useEffect, useState } from 'react';
+import { fetchTrendMovies } from '../api/api';
 import Loader from '../components/Loader/Loader';
 import ErrorMessage from '../components/ErrorMessage/ErrorMessage';
+import MovieList from '../components/MovieList/MovieList';
 
 const HomePage = () => {
-  const [movies, setMovies] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   useEffect(() => {
-    const fetchTrendingMoviesHandler = async () => {
+    const fetchData = async () => {
       try {
-        setLoading(true);
-        const data = await fetchTrendingMovies();
-
-        setMovies(data.results);
+        setIsLoading(true);
+        const moviesObj = await fetchTrendMovies();
+        setData(moviesObj.results);
+        if (data === null) {
+          return;
+        }
       } catch (error) {
-        setError(true);
-        console.log(error.message);
+        setError(error.message);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
-    fetchTrendingMoviesHandler();
+    fetchData();
   }, []);
 
   return (
     <div>
-      <h2 style={{ textAlign: 'center' }}>Trending</h2>
-      {loading && <Loader />}
-      {error ? <ErrorMessage /> : <MovieList movies={movies} />}
+      {isLoading && (
+        <div>
+          <Loader />
+        </div>
+      )}
+      {error && <ErrorMessage />}
+      <MovieList data={data} />
     </div>
   );
 };
-
 export default HomePage;

@@ -1,25 +1,15 @@
-.nav {
+.header {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  height: 70px;
-  background: #000;
+  flex-direction: row;
+  gap: 20px;
+  font-size: 30px;
+  padding: 10px;
 }
-.link {
-  display: inline-flex;
-  padding: 12px;
-  border: 1px solid transparent;
-  border-radius: 5px;
-  font-size: 22px;
-  transition: all 0.5s;
-  color: #493939;
-  text-decoration: none;
-}
-.link:hover {
-  color: #7c6e6e9d;
-}
-.active {
+
+.activeLink {
   color: #ffffff;
-  border: 1px solid #fafafa;
+}
+
+.link {
+  padding: 10px;
 }
