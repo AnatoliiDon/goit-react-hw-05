@@ -1,6 +1,6 @@
 import toast, { Toaster } from 'react-hot-toast';
 import { useState } from 'react';
-import css from './searchBar.module.css';
+import css from './SearchBar.module.css';
 const SearchBar = ({ onSubmit }) => {
   const [enteredValue, setEnteredValue] = useState('');
 
