@@ -21,17 +21,12 @@ const MoviesPage = () => {
   };
 
   useEffect(() => {
+    if (!query) return;
     const fetchQueryMovieData = async () => {
       try {
         setIsLoading(true);
-        if (query === null) {
-          return;
-        }
         const moviesObj = await fetchTrendMoviesByQuery(query);
         setData(moviesObj.results);
-        if (data === null) {
-          return;
-        }
       } catch (error) {
         setError(error.message);
       } finally {
